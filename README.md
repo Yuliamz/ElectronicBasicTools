@@ -13,7 +13,7 @@ Pequeño software con algunas utilidades para electrónica básica
 ### Para ingresar expresiones
 
 NOT: !(Como prefijo), o '(como sufijo)</br>
-AND: *, o escribir las variables unidas (AB  ==  A*B)</br>
+AND: \*, o escribir las variables unidas (AB  ==  A*B)</br>
 OR: +</br>
 1 y 0 Estan disponibles como true y false respectivamente</br>
 
