@@ -15,7 +15,7 @@ public final class MainFrame extends javax.swing.JFrame {
     private KarnaughMapSolver jPanelMainMap;
 
     public MainFrame() {
-        super("Electronica General | Julian David Grijalba Bernal");
+        super("ElectronicBasicTools");
         initComponents();
         this.setMinimumSize(new Dimension(540, 512));
         this.setLayout(new BorderLayout());
