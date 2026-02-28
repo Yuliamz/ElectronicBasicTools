@@ -1,39 +1,35 @@
 package karnaughMap;
 
-import GUI.KarnaughMapSolver;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import GUI.KarnaughMapPane;
+import javafx.scene.control.Button;
 import java.util.ArrayList;
-import javax.swing.JButton;
 
 /**
- *
- * @author Julian David Grijalba Bernal
+ * JavaFX button for Karnaugh map cells that cycles through 0, 1, x values.
  */
-public final class RenderButton extends JButton{
+public final class RenderButton extends Button {
+
     public ArrayList<String> values;
 
     public RenderButton() {
         initValues();
-        this.setFont(new Font ( "Arial", Font. BOLD, 12 ));
         this.setText(values.get(0));
-        this.setBackground(Color.WHITE);
-        super.addActionListener(al);
+        this.setMaxWidth(Double.MAX_VALUE);
+        this.setMaxHeight(Double.MAX_VALUE);
+        this.getStyleClass().add("karnaugh-cell");
+        applyStyle();
+        this.setOnAction(e -> {
+            try {
+                this.setText(values.get(values.indexOf(this.getText()) + 1));
+            } catch (Exception ex) {
+                this.setText(values.get(0));
+            }
+            applyStyle();
+            KarnaughMapPane.solve();
+        });
     }
-      
-    ActionListener al = (ActionEvent e) -> {
-        try {
-            this.setText(values.get(values.indexOf(this.getText())+1));
-        } catch (Exception ex) {
-            this.setText(values.get(0));
-        }
-        changeColor();
-        KarnaughMapSolver.solve();
-    };
-    
-    private void initValues(){
+
+    private void initValues() {
         values = new ArrayList<>();
         values.add("0");
         values.add("1");
@@ -44,22 +40,21 @@ public final class RenderButton extends JButton{
     public String toString() {
         return this.getText();
     }
-    
-    public int getValue(){
+
+    public int getValue() {
         try {
             return Integer.parseInt(this.getText());
         } catch (Exception e) {
             return 2;
         }
     }
-    
-    public void changeColor(){
-        switch(this.getText()){
-            case "0":this.setBackground(Color.WHITE);break;
-            case "1":this.setBackground(new Color(91, 255, 152));break;
-            case "x":this.setBackground(new Color(122, 207, 255));break;
-            default:break;
+
+    public void applyStyle() {
+        this.getStyleClass().removeAll("cell-0", "cell-1", "cell-x");
+        switch (this.getText()) {
+            case "0" -> this.getStyleClass().add("cell-0");
+            case "1" -> this.getStyleClass().add("cell-1");
+            case "x" -> this.getStyleClass().add("cell-x");
         }
-    }   
-    
+    }
 }
