@@ -22,11 +22,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.text.html.HTML;
 
 public class JPanelReduction extends javax.swing.JPanel {
 
-    private Thread thread;
+    private volatile Thread thread;
     private static String actualExpression;
     private static String actualMinExpression;
     private static String actualMaxExpression;
@@ -295,7 +294,8 @@ public class JPanelReduction extends javax.swing.JPanel {
 
     private void stopThread() {
         if (thread != null) {
-            thread.stop();
+            thread.interrupt();
+            thread = null;
         }
     }
 

@@ -1,11 +1,11 @@
 package TruthTable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Iterator;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
+import java.util.Map;
+import java.util.Set;
 import javax.script.ScriptException;
 import org.apache.commons.lang.ArrayUtils;
 
@@ -14,8 +14,6 @@ import org.apache.commons.lang.ArrayUtils;
  * @author Julian David Grijalba Bernal
  */
 public class TruthTable {
-
-    public static final ScriptEngine ENGINE = new ScriptEngineManager().getEngineByExtension("js");
 
     public static Integer[][] getTable(ArrayList<Integer> funcValues) {
         int quantityVars = (int) Math.ceil(Math.log(funcValues.size()) / Math.log(2));
@@ -60,11 +58,12 @@ public class TruthTable {
     }
 
     public static boolean evaluate(String parsedExpression, ArrayList<Boolean> aRow, Set<Character> vaSet) throws ScriptException {
+        Map<Character, Boolean> varValues = new HashMap<>();
         int i = 0;
         for (Character next : vaSet) {
-            ENGINE.eval(next + " = " + aRow.get(i++));
+            varValues.put(next, aRow.get(i++));
         }
-        return Boolean.parseBoolean(String.valueOf(ENGINE.eval(parsedExpression)));
+        return BooleanExpressionEvaluator.evaluate(parsedExpression, varValues);
     }
 
     public static Set<Character> getVariables(String expression) {
@@ -115,10 +114,6 @@ public class TruthTable {
         String[] var = variableSet.toArray(new String[variableSet.size() + 1]);
         var[variableSet.size()] = "Salida";
         return var;
-    }
-
-    public static ScriptEngine getENGINE() {
-        return ENGINE;
     }
 
 }
