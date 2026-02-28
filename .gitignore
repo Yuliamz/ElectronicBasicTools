@@ -1,0 +1,9 @@
+target/
+*.class
+*.jar
+!src/main/resources/**
+.idea/
+*.iml
+.settings/
+.classpath
+.project
